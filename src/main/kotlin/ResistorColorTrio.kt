@@ -4,14 +4,16 @@ object ResistorColorTrio {
 
     fun text(vararg input: Color): String {
         val (firstDigit, secondDigit, numberOfZeroes) = input
+
         var result = "${firstDigit.ordinal}${secondDigit.ordinal}".toInt()
         result *= 10.toDouble().pow(numberOfZeroes.ordinal.toDouble()).toInt()
-        var i = 0
-        while (result > 1_000) {
-            i += 1
-            result /= 1_000
-        }
-        val unit = Unit.values()[i].name.lowercase()
+
+        val unitPosition = (result.toString().length - 1) / 3
+
+        result /= 1_000.toDouble().pow(unitPosition.toDouble()).toInt()
+
+        val unit = Unit.values()[unitPosition].name.lowercase()
+
         return "$result $unit"
     }
 }
